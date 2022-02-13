@@ -1,0 +1,28 @@
+- name: First task
+  hosts: node1.example.com
+  tasks:
+  - name: install package
+    yum:
+     name: 
+     - httpd
+     - firewalld
+     - python3
+     state: installed
+  - name: Check httpd status
+    service:
+     name: '{{ item }}'
+     state: started
+    loop:
+      - httpd
+      - firewalld
+  - name: main html page
+    copy:
+      dest: /var/www/html/index.html
+      content: "Welcome to my web server"
+
+  - name: Enable access throught firewall
+    firewalld:
+        service: http
+        permanent: true
+        state: enabled
+        immediate: yes

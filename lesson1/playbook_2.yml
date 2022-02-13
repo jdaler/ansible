@@ -1,0 +1,17 @@
+- name: Second task
+  hosts: node1.example.com
+  tasks:
+  - name: Remove httpd
+    yum:
+     name: httpd
+     state: removed
+  - name: delete main html page
+    file:
+      path: /var/www/html/index.html
+      state: absent
+  - name: Disable access throught firewall
+    firewalld:
+        service: http
+        permanent: true
+        state: disabled
+        immediate: yes
